@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style-trailer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">\
+    <title>Trailers | APEX MLRIT</title>
+    
+</head>
+<body>
+    <div class="cursor" id="customCursor"></div>
+    <div id="top-image">
+        <img src="assets/img/logo.png" alt="Logo">
+    </div>
+
+    <div id="trailer-text">
+        <h2>Trailers</h2>
+    </div>
+
+    <div class="circle-container">
+        <div class="circle" id="circle1">
+            <img src="assets/img/2.png" alt="Circle 1">
+            <video id="video1" controls>
+                <source src="assets/img/Comp 11_13.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="circle" id="circle2">
+            <img src="assets/img/3.png" alt="Circle 2">
+            <video id="video2" controls>
+                <source src="assets/img/aaaa.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        let currentlyPlayingVideo = null;
+    
+        function playVideo(circleId, videoId) {
+            if (currentlyPlayingVideo && currentlyPlayingVideo !== videoId) {
+                resetEffect(currentlyPlayingVideo.circleId, currentlyPlayingVideo.videoId);
+            }
+    
+            const circle = document.getElementById(circleId);
+            const img = circle.querySelector('img');
+            const video = document.getElementById(videoId);
+    
+            circle.classList.add('circle-hovered');
+            img.style.opacity = '0';
+            video.style.display = 'block';
+            video.style.opacity = '1';
+            video.play();
+    
+            currentlyPlayingVideo = { circleId, videoId };
+    
+            video.addEventListener('ended', function() {
+                resetEffect(circleId, videoId);
+                currentlyPlayingVideo = null;
+            });
+        }
+    
+        function resetEffect(circleId, videoId) {
+            const circle = document.getElementById(circleId);
+            const img = circle.querySelector('img');
+            const video = document.getElementById(videoId);
+    
+            circle.classList.remove('circle-hovered');
+            img.style.opacity = '1';
+            video.style.display = 'none';
+            video.style.opacity = '0';
+            video.pause();
+            video.currentTime = 0;
+        }
+    
+        function resetAllEffects() {
+            if (currentlyPlayingVideo) {
+                resetEffect(currentlyPlayingVideo.circleId, currentlyPlayingVideo.videoId);
+                currentlyPlayingVideo = null;
+            }
+        }
+    
+        document.getElementById('circle1').addEventListener('click', function(event) {
+            event.stopPropagation();
+            if (currentlyPlayingVideo && currentlyPlayingVideo.videoId === 'video1') {
+                fullscreenVideo('video1');
+            } else {
+                playVideo('circle1', 'video1');
+            }
+        });
+    
+        document.getElementById('circle2').addEventListener('click', function(event) {
+            event.stopPropagation();
+            if (currentlyPlayingVideo && currentlyPlayingVideo.videoId === 'video2') {
+                fullscreenVideo('video2');
+            } else {
+                playVideo('circle2', 'video2');
+            }
+        });
+    
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.circle')) {
+                resetAllEffects();
+            }
+        });
+    
+        function fullscreenVideo(videoId) {
+            const video = document.getElementById(videoId);
+    
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.mozRequestFullScreen) {
+                video.mozRequestFullScreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
+            }
+        }
+    
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                exitFullscreen();
+            }
+        });
+    
+        function exitFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    </script>
+    <script>
+        const cursor = document.querySelectorAll('.cursor');
+     
+     document.addEventListener('mousemove', (e) => {
+       cursor.forEach((cursorElement) => {
+         cursorElement.style.left = `${e.clientX}px`;
+         cursorElement.style.top = `${e.clientY}px`;
+       });
+     });
+     
+     document.addEventListener('click', () => {
+       cursor.forEach((cursorElement) => {
+         cursorElement.classList.add('cursor-click-effect');
+       });
+     
+       setTimeout(() => {
+         cursor.forEach((cursorElement) => {
+           cursorElement.classList.remove('cursor-click-effect');
+         });
+       }, 100); 
+     });
+      </script>
+</body>
+</html>
