@@ -22,7 +22,7 @@ This website aims to serve as an interactive platform for our club, featuring:
 
 ## 📂 How to Use  
 1. Clone this repository:
-  -> git clone https://github.com/your-username/club-website.git
+  -> https://github.com/the-zer0/APEXWebsite.git
   -> cd club-website
   -> Open index.html
 
