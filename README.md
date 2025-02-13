@@ -32,4 +32,4 @@ We welcome contributions! If you'd like to suggest improvements or report bugs, 
 📞 Contact
 For any queries or collaborations, reach out to us at:
 ✉️ Email: apexgaming@gmail.com
-🌐 Website: [Coming Soon]
+🌐 Website: https://the-zer0.github.io/APEXWebsite/
